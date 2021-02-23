@@ -1,0 +1,24 @@
+  
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - env
+        - beans
+        - health
+        - metrics
+        - httptrace
+        - refresh
+        - routes
+        - hystrix.stream
+        
+  endpoint:
+    health:
+      show-details: always
+
+  
+
+logging:
+  level:
+    root: INFO
