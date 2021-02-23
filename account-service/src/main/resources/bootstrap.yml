@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: accounts-service
+
+---
+spring:
+  config:
+    activate:
+      on-profile:
+      - framework
+    
+  cloud:
+    config:
+      uri: http://config:8888
+      fail-fast: true    
+---
+spring:
+  config:
+    activate:
+      on-profile:
+      - kubernetes
+  
+  cloud:
+    config:
+      enabled: false
+    kubernetes:  
+      secrets:
+        enabled: true
+      reload:
+        enabled: true
+        mode: polling
+        period: 5000
+      config:
+        namespace: default
+        sources:
+          - name: application-config
+          - name: account-config
+  
