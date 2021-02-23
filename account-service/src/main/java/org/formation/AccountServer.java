@@ -18,7 +18,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-//@EnableFeignClients
+@EnableFeignClients
 @EnableCircuitBreaker
 public class AccountServer {
 
