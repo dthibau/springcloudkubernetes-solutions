@@ -103,10 +103,10 @@ public class AccountsController {
 		}
 		account = accountRepository.save(account);
 		
-		Courriel email = new Courriel();
-		email.setTo(account.getEmail());
-		email.setSubject("Registration");
-		email.setText("Welcome onboard !");
+		Courriel email = Courriel.builder().
+		         to(account.getEmail()).text("Registration").subject("Welcome onboard !").build();
+		
+
 
 		notificationClient.sendSimple(email);
 
