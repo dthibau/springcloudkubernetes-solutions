@@ -24,6 +24,10 @@ spring:
     config:
       enabled: false
     kubernetes:
+      reload:
+        enabled: true
+        mode: polling
+        period: 5000
       config:
         namespace: default
         sources:
