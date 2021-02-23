@@ -1,0 +1,20 @@
+   
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - env
+        - beans
+        - health
+        - metrics
+        - httptrace
+        - refresh
+        - gateway
+  endpoint:
+    health:
+      show-details: always
+    
+
+    
+

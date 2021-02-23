@@ -1,0 +1,12 @@
+notification:
+  host: fake-smtp
+  port: 2525
+  username: toto
+  password: secret
+
+---
+spring:
+  profiles: replica
+    
+server:
+  port: 9081
