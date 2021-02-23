@@ -47,7 +47,8 @@ public class NotificationServer {
 	public JavaMailSender getJavaMailSender() {
 	    JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
-	    
+	    System.out.println("User name"+ mailConfigurationProperties.getUsername());
+		System.out.println("Password"+ mailConfigurationProperties.getPassword());
 	    mailSender.setHost(mailConfigurationProperties.getHost());
 	    mailSender.setPort(mailConfigurationProperties.getPort());
 	     

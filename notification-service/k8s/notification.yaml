@@ -25,10 +25,32 @@ spec:
     spec:
       containers:
       - name: notification
+        env :
+          - name: SPRING_CLOUD_KUBERNETES_SECRETS_PATHS
+            value: "/etc/secrets"
+          - name: NOTIFICATION_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: smtp-secret
+                key: username
+          - name: NOTIFICATION_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: smtp-secret
+                key: password
         image: dthibau/notification-service
+        volumeMounts:
+          - name: secret
+            mountPath: "/etc/secrets"
+            readOnly: true
         ports:
           - containerPort: 8080
       - name: fake-smtp
         image: dthibau/fake-smtp:1.0
         ports:
           - containerPort: 8080
+      volumes:
+        - name: secret
+          secret:
+            secretName: smtp-secret
+      

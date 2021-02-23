@@ -23,7 +23,9 @@ spring:
   cloud:
     config:
       enabled: false
-    kubernetes:
+    kubernetes:  
+      secrets:
+        enabled: true
       reload:
         enabled: true
         mode: polling
