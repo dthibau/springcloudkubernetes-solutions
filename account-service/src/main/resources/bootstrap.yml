@@ -25,11 +25,16 @@ spring:
       on-profile: kubernetes
       
   cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
     config:
       enabled: false
     kubernetes:
-      reload:
-        enabled: true
+#      reload:
+#        enabled: true
+      loadbalancer:
+        mode: service
       config:
         namespace: default
         sources:
