@@ -21,18 +21,22 @@ public class ServiceController {
 	RestTemplate restTemplate;
 	
 	public ServiceController(RestTemplateBuilder builder) {
-		restTemplate = builder.build();
+		this.restTemplate = builder.build();
 	}
 	
 	@GetMapping("/instances")
-	public List<ServiceInstance> listInstance(@RequestParam String serviceId) {
+	public List<ServiceInstance> getInstances(@RequestParam String serviceId) {
+		
 		return discoveryClient.getInstances(serviceId);
 	}
 	
-	@GetMapping("/sendMail")
-	public String sendMail() {
-		Courriel c = Courriel.builder().
-		         to("dthibau@plb.fr").text("Féliciations pour votre nouvelle commande").subject("Nouvelle commande").build();
-		return restTemplate.postForObject("http://notification-service.default.svc.cluster.local:8080/sendSimple", c, String.class);
+	@GetMapping("/emails")
+	public void sendMails() {
+		
+		Courriel c = Courriel.builder().to("dthibau@gmail.com").subject("Test LoadBalancing").text("Juste un texte").build();
+		
+		for ( int i=0; i< 3; i++ ) {
+			System.out.println(restTemplate.postForObject("http://notification-service.default.svc.cluster.local:8080/sendSimple",c, String.class));
+		}
 	}
 }

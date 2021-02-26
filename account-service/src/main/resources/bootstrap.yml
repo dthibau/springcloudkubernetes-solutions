@@ -1,42 +1,36 @@
 spring:
   application:
-    name: accounts-service
-  
-  cloud:
-    loadbalancer:
-      ribbon:
-        enabled: false
+    name: account-service
+
 ---
 spring:
   config:
     activate:
-      on-profile:
-      - framework
-    
+      on-profile: netflix
+  
   cloud:
     config:
       uri: http://config:8888
-      fail-fast: true    
+      fail-fast: true
+      password: ${CONFIG_SERVICE_PASSWORD}
+      username: user
+    kubernetes:
+      config:
+        enabled: false
+  
 ---
 spring:
   config:
     activate:
-      on-profile:
-      - kubernetes
-  
+      on-profile: kubernetes
+      
   cloud:
     config:
       enabled: false
-    kubernetes:  
-      secrets:
-        enabled: true
+    kubernetes:
       reload:
         enabled: true
-        mode: polling
-        period: 5000
       config:
         namespace: default
         sources:
           - name: application-config
-          - name: account-config
-  

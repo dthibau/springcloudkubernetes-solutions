@@ -12,7 +12,6 @@ import org.formation.repository.AccountRepository;
 import org.formation.repository.Role;
 import org.formation.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,9 +34,7 @@ public class AccountsController {
 
 	@Autowired
 	protected NotificationClient notificationClient;
-	
-	@Autowired
-    Resilience4JCircuitBreakerFactory circuitBreakerFactory;
+
 
 
 	public AccountsController(AccountRepository accountRepository, RoleRepository roleRepository) {
@@ -105,15 +102,12 @@ public class AccountsController {
 			account.addRole(roleRepository.findByName(Role.CUSTOMER));
 		}
 		account = accountRepository.save(account);
-		logger.info("Saving: " + account);
-
-		Courriel email = Courriel.builder().
-		         to(account.getEmail()).text("Registration").subject("Welcome onboard !").build();
 		
+		Courriel c = Courriel.builder().to(account.getEmail()).subject("Registration").text("Welcome onboard !").build();
 
-		circuitBreakerFactory.create("notification").run(() -> notificationClient.sendSimple(email), throwable -> "FALLBACK");
-		
-        logger.info("Returning: " + account);
+
+		notificationClient.sendSimple(c);
+
 		return account;
 	}
 

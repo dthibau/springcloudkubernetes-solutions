@@ -15,6 +15,7 @@ kind: Deployment
 metadata:
   name: account-service
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: account-service
@@ -24,9 +25,7 @@ spec:
         app: account-service
     spec:
       containers:
-      - name: account
+      - name: account-service
         image: dthibau/account-service
-        ports:
-          - containerPort: 8080
 
-      
+          
