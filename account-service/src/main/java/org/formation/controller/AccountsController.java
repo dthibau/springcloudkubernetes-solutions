@@ -12,6 +12,7 @@ import org.formation.repository.AccountRepository;
 import org.formation.repository.Role;
 import org.formation.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +37,8 @@ public class AccountsController {
 	protected NotificationClient notificationClient;
 
 
+	@Autowired
+	private CircuitBreakerFactory cbFactory;
 
 	public AccountsController(AccountRepository accountRepository, RoleRepository roleRepository) {
 		this.accountRepository = accountRepository;
@@ -105,8 +108,9 @@ public class AccountsController {
 		
 		Courriel c = Courriel.builder().to(account.getEmail()).subject("Registration").text("Welcome onboard !").build();
 
+		String ret = cbFactory.create("notification").run(() -> notificationClient.sendSimple(c), fallback -> "FALLBACK");
 
-		notificationClient.sendSimple(c);
+		System.out.println(ret + System.currentTimeMillis());
 
 		return account;
 	}
