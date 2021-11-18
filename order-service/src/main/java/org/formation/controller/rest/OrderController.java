@@ -10,6 +10,7 @@ import org.formation.model.ClientRepository;
 import org.formation.model.Order;
 import org.formation.model.OrderItem;
 import org.formation.model.OrderRepository;
+import org.formation.notification.NotificationService;
 import org.formation.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.java.Log;
+
 @RestController
 @RequestMapping("/api/orders")
+@Log
 public class OrderController {
 
 	@Autowired
@@ -33,6 +37,9 @@ public class OrderController {
 	
 	@Autowired
 	ClientRepository clientRepository;
+	
+	@Autowired
+	NotificationService notificationService;
 	
 	@GetMapping
 	List<Order> findAll() {
@@ -58,7 +65,10 @@ public class OrderController {
 			oi.setOrder(order);
 		}
 		order = orderService.processOrder(order);
-		
+		log.info("About to send mail");
+		notificationService.sendMail(client);
+		log.info("Mail sent");
+
 		return new ResponseEntity<Order>(order,HttpStatus.CREATED);
 		
 	}
