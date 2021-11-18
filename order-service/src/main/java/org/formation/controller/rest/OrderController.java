@@ -66,8 +66,8 @@ public class OrderController {
 		}
 		order = orderService.processOrder(order);
 		log.info("About to send mail");
-		notificationService.sendMail(client);
-		log.info("Mail sent");
+		String ret = notificationService.sendMail(client);
+		log.info("Mail sent " + ret);
 
 		return new ResponseEntity<Order>(order,HttpStatus.CREATED);
 		
