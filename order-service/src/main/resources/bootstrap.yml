@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: order-service
+  cloud:
+    config:
+      uri: http://config:8888
+      fail-fast: true
+
+    loadbalancer:
+      ribbon:
+        enabled: false
+        
+
+---
+spring:
+  config:
+    activate:
+      on-profile:
+      - kubernetes
+  
+  cloud:
+    config:
+      enabled: false
+    kubernetes:  
+      config:
+        namespace: default
+        sources:
+          - name: application-config

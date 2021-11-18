@@ -1,0 +1,13 @@
+apiVersion: skaffold/v2beta12
+kind: Config
+metadata:
+  name: order-service
+build:
+  artifacts:
+  - image: dthibau/order-service
+    context: .
+    jib: {}
+deploy:
+  kubectl:
+    manifests:
+    - k8s/order.yaml
