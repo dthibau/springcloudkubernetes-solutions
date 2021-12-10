@@ -1,0 +1,13 @@
+apiVersion: skaffold/v2beta12
+kind: Config
+build:
+  artifacts:
+  - image: dthibau/delivery-service
+    context: .
+    jib: {}
+#deploy:
+#  kubectl:
+#    manifests:
+#    - "src/main/k8/delivery-service.yml"
+
+  
