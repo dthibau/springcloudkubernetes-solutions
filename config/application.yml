@@ -24,6 +24,8 @@ spring:
   
   cloud:
     kubernetes:
+      secrets:
+        enabled: true
       reload:
         enabled: true
         mode: polling
