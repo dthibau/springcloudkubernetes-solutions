@@ -40,7 +40,7 @@ spec:
               secretKeyRef:
                 name: smtp-secret
                 key: password
-        image: dthibau/notification-service
+        image: dthibau/notification-service-kub:1.0.0
         volumeMounts:
           - name: secret
             mountPath: "/etc/secrets"

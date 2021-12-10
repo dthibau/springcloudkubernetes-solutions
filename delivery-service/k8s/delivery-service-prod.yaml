@@ -1,32 +1,30 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: order-service
+  name: delivery-service
 spec:
   ports:
   - port: 8080
-    targetPort: 8080
     name: http
   type: LoadBalancer
   selector:
-    app: order-service
+    app: delivery-service
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: order-service
+  name: delivery-service
 spec:
   selector:
     matchLabels:
-      app: order-service
+      app: delivery-service
   template:
     metadata:
       labels:
-        app: order-service
+        app: delivery-service
     spec:
       containers:
-      - name: order-service
-        image: dthibau/order-service
-
-      
-
+      - name: delivery-service
+        image: dthibau/delivery-service-kub:1.0.0
+        ports:
+          - containerPort: 8080

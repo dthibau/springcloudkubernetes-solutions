@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
       - name: order-service
-        image: dthibau/order-service
+        image: dthibau/order-service-kub:1.0.0
 
       
 

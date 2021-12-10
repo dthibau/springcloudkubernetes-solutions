@@ -2,7 +2,7 @@ package org.formation.notification;
 
 import org.formation.model.Client;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,7 +13,7 @@ public class NotificationService {
 	RestTemplate restTemplate;
 
 	@Autowired
-	Resilience4JCircuitBreakerFactory circuitBreakerFactory;
+	CircuitBreakerFactory circuitBreakerFactory;
 	
 	public String sendMail(Client client) {
 		Courriel c = Courriel.builder().to(client.getEmail()).text("Féliciations pour votre nouvelle commande")
