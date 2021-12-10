@@ -15,6 +15,17 @@ management:
     health:
       show-details: always
     
-
-    
+---
+spring:
+  config:
+    activate:
+      on-profile:
+      - kubernetes
+  
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true
+        mode: polling
+        period: 5000    
 
