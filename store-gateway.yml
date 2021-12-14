@@ -12,7 +12,6 @@ spec:
       protocol: HTTP
     hosts:
     - "*"
----
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -40,6 +39,12 @@ spec:
     route:
     - destination:
         host: delivery-service
+        subset: v1
+      weight: 80
+    - destination:
+        host: delivery-service
+        subset: v2
+      weight: 20
         
   - match:
     - uri:
@@ -47,3 +52,18 @@ spec:
     route:
     - destination:
         host: zipkin
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: delivery-service
+spec:
+  host: delivery-service
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+  - name: v2
+    labels:
+      version: v2
